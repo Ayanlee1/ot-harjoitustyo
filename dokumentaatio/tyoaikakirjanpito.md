@@ -6,3 +6,6 @@
 |----------|------|---------|
 |16-11-2025|2h|Viikko 3, Teht.1-2|
 |17-11-2025|3h|Viikko 3, Harjoitus1-6|
+|21-11-2025|3.5h|Viikko 4, Harjoitus1-2|
+|23-11-2025|2h|Viikko 4, Harjoitus3-4|
+|25-11-2025|1.5h|Viikko 4, Harjoitus5-6|
