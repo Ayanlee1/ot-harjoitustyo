@@ -23,3 +23,4 @@ Sovellus, joka näyttää nykyisen säätilan ja ennusteen käyttäjälle.
 - [Työaikakirjanpito](dokumentaatio/tyoaikakirjanpito.md)
 - [Changelog](dokumentaatio/changelog.md)
 - [Arkkitehtuuri](dokumentaatio/arkkitehtuuri.md)
+- [Releases](https://github.com/Ayanlee1/ot-harjoitustyo/releases/tag/viikko5) -sivulta

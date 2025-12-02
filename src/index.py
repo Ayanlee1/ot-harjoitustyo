@@ -9,6 +9,7 @@ def main():
         print("2 - Näytä paikat")
         print("3 - Poista paikka")
         print("4 - Näytä sää")
+        print("5 - Näytä 5 päivän ennuste")
         print("0 - Lopeta")
 
         choice = input("Valinta: ")
@@ -34,6 +35,13 @@ def main():
         elif choice == "4":
             location = input("Paikka: ")
             print(service.get_weather(location))
+
+        elif choice == "5":
+            location = input("Paikka:")
+            forecasts = service.get_forecast(location)
+            print(f"5 päivän ennuste {location}:lle:")
+            for forecast in forecasts:
+                print(f"  - {forecast}")
 
         elif choice == "0":
             break

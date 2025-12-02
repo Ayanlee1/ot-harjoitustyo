@@ -28,3 +28,7 @@ class TestWeatherService(unittest.TestCase):
     def test_get_weather(self):
         weather = self.service.get_weather("Test")
         self.assertEqual(weather, "Test: 20°C, Aurinkoista")
+
+    def test_get_forecast_with_invalid_days(self):
+        forecasts = self.service.get_forecast("Test", -1)
+        self.assertEqual(len(forecasts), 0)

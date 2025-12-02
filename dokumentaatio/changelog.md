@@ -20,3 +20,11 @@
 - Pylint otettu käyttöön, virheitä alle 10
 - Luotu arkkitehtuurikuvausta
 - Automatisoidu formatointi autopep8:lla
+
+## Viikko 5
+
+- Käyttäjä näkee 5 päivän sääennusteen
+- Lisätty uusi toiminnallisuus vaatimusmäärittelyyn
+- Testikattavuus nostettu 48%:iin
+- Pylint-virheitä vähennetty 2:een
+- Lisätty sekvenssikaavio arkkitehtuuridokumenttiin
