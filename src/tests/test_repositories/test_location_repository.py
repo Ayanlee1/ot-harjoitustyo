@@ -1,34 +1,37 @@
 import unittest
-from repositories.location_repository import LocationRepository
+from services.weather_service import WeatherService
+from initialize_database import initialize_database
 
 
-class TestLocationRepository(unittest.TestCase):
+class TestWeatherService(unittest.TestCase):
     def setUp(self):
-        self.repository = LocationRepository()
-        self.repository.delete_all()
+        initialize_database()
+        self.service = WeatherService()
 
-    def test_create_location(self):
-        result = self.repository.create("Helsinki")
+    def test_add_location(self):
+        result = self.service.add_location("Helsinki")
         self.assertTrue(result)
-        locations = self.repository.find_all()
-        self.assertIn("Helsinki", locations)
+        self.assertIn("Helsinki", self.service.get_locations())
 
-    def test_create_duplicate_location(self):
-        self.repository.create("Tokyo")
-        result = self.repository.create("Tokyo")
+    def test_add_duplicate_location(self):
+        self.service.add_location("Tokyo")
+        result = self.service.add_location("Tokyo")
         self.assertFalse(result)
 
-    def test_delete_location(self):
-        self.repository.create("Berlin")
-        result = self.repository.delete("Berlin")
+    def test_remove_location(self):
+        self.service.add_location("Berlin")
+        result = self.service.remove_location("Berlin")
         self.assertTrue(result)
-        locations = self.repository.find_all()
-        self.assertNotIn("Berlin", locations)
+        self.assertNotIn("Berlin", self.service.get_locations())
 
-    def test_find_all_locations(self):
-        self.repository.create("Paris")
-        self.repository.create("London")
-        locations = self.repository.find_all()
-        self.assertEqual(len(locations), 2)
-        self.assertIn("Paris", locations)
-        self.assertIn("London", locations)
+    def test_get_weather_without_api_key(self):
+        service = WeatherService()
+        service.api_key = ""
+        weather = service.get_weather("Helsinki")
+        self.assertEqual(weather, "Virhe")
+
+    def test_get_5day_forecast_without_api_key(self):
+        service = WeatherService()
+        service.api_key = ""
+        forecasts = service.get_5day_forecast("Helsinki")
+        self.assertEqual(forecasts, ["Virhe"])

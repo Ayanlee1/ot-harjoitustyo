@@ -12,3 +12,6 @@
 |27-11-2025|2.5h|Viikko 5, Harjoitus1-2|
 |29-11-2025|2h|Viikko 5, Harjoitus3-4|
 |02-12-2025|3h|Viikko 5, Harjoitus5-8|
+|06-12-2025|4h|Viikko 6, Harjoitus1-2|
+|07-12-2025|4h|Viikko 6, Harjoitus3-4|
+|09-12-2025|1h|Viikko 6, Harjoitus6-7|

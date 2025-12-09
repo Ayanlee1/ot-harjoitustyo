@@ -2,17 +2,28 @@
 
 ## Sovelluslogiikka
 
-Sovellus noudattaa kerrosarkkitehtuuria, jossa käyttöliittymä on eriytetty sovelluslogiikasta.
+Sovellus noudattaa kolmikerroksista kerrosarkkitehtuuria, jossa käyttöliittymä, sovelluslogiikka ja tietokantakerros on erotettu toisistaan.
 
 ```mermaid
 classDiagram
+    class UI {
+        -service: WeatherService
+        +run()
+        +_add_location()
+        +_show_locations()
+        +_remove_location()
+        +_get_weather()
+        +_get_forecast()
+    }
+    
     class WeatherService {
         -location_repository: LocationRepository
+        -api_key: str
         +add_location(location)
         +get_locations()
         +remove_location(location) 
         +get_weather(location)
-        +get_forecast(location, days)
+        +get_5day_forecast(location)
     }
     
     class LocationRepository {
@@ -26,21 +37,28 @@ classDiagram
         +get_database_connection()
     }
     
+    UI --> WeatherService
     WeatherService --> LocationRepository
     LocationRepository --> DatabaseConnection
 ```
 
-## Käyttöliittymä
+## 1.Käyttöliittymä(ui.py)
 
-Käyttöliittymä on toteutettu tekstipohjaisena `index.py`. Se tarjoaa valikon, jonka kautta käyttäjä voi:
+- **UI-luokka**: Hoitaa kaiken käyttäjän kanssa vuorovaikutuksen
+- Näyttää valikon, lukee syötteet, tulostaa tulokset
+- Kutsuu `WeatherService`
+- Metodit: `run()`, `_add_location()`, `_show_locations()`, `_remove_location()`, `_get_weather()`, `_get_forecast()`
 
-- Lisätä uusia paikkoja
-- Tarkastella tallennettuja paikkoja
-- Poistaa paikkoja
-- Katsoa nykyistä säätä paikalle
-- Katsoa 5 päivän sääennusteen paikalle
+## 2.Sovelluslogiikkakerros (service/weather_service.py)
+- **WeatherService-luokka**: hoitaa kaiken säätietojen logiikan
+- Hakee säätiedot OpenWeatherMap API:sta
+- Hallinnoi paikkatietoja `LocationRepository`:n kautta
+- Metodit: `add_location()`, `get_location()`, `remove_location()`, `get_weather()`, `get_5day_forecast()`
 
-Käyttöliittymä kutsuu `WeatherService`-luokan metodeja ja näyttää tulokset käyttäjälle.
+## 3.Tietokantakerros (repositories/location_repository.py)
+- **LocationRepository-luokka**: Hoitaa paikkatietojen tallennuksen
+- Toteuttaa Repository-suunnittelumallin
+- Metodit: `find_all()`, `create()`, `delete()`
 
 
 ## Tietojen tallennus
@@ -53,23 +71,24 @@ Paikkatiedot tallennetaan SQLite-tietokantaan `locations`-tauluun.
 
 ### 5 päivän sääennusteen hakeminen
 
-Kun käyttäjä valitsee valikosta vaihtoehdon "5 - Näytä 5 päivän ennuste" ja syöttää paikan nimen, sovellus toimii seuraavasti:
+Kun käyttäjä valitsee valikosta vaihtoehdon "5 - Hae 5 päivän ennuste" ja syöttää paikan nimen, sovellus toimii seuraavasti:
 
 ```mermaid
 sequenceDiagram
     actor Käyttäjä
-    participant Käyttöliittymä
+    participant UI
     participant WeatherService
     participant LocationRepository
+    participant OpenWeatherMap API
 
-    Käyttäjä->>Käyttöliittymä: Valitse "5 - Näytä 5 päivän ennuste"
-    Käyttöliittymä->>Käyttäjä: "Minkä paikan ennuste haluat?"
-    Käyttäjä->>Käyttöliittymä: Syötä "Helsinki"
-    Käyttöliittymä->>WeatherService: get_forecast("Helsinki", 5)
-    WeatherService->>LocationRepository: find_all()
-    LocationRepository-->>WeatherService: paikkalista
-    WeatherService-->>Käyttöliittymä: ennustelista
-    Käyttöliittymä-->>Käyttäjä: Näytä 5 päivän ennuste
+    Käyttäjä->>UI: Valitse "5 - Hae 5 päivän ennuste"
+    UI->>Käyttäjä: "Paikka:"
+    Käyttäjä->>UI: Syötä "Helsinki"
+    UI->>WeatherService: get_5day_forecast("Helsinki")
+    WeatherService->>OpenWeatherMap API: Lähetä HTTP-pyyntö
+    OpenWeatherMap API-->>WeatherService: Palauta ennustedata
+    WeatherService-->>UI: Muotoiltu ennustelista
+    UI-->>Käyttäjä: Näytä 5 päivän ennuste
 ```
-Sekvenssikaavio kuvaa uuden sääennustetoiminnallisuuden toimintaa. Käyttöliittymä kutsuu `WeatherService`-luokan `get_forecast`-metodia, joka hakee tallennetut paikat `LocationRepository`:n kautta. Ennusteet palautetaan käyttöliittymälle, joka näyttää ne käyttäjälle. 
+
 

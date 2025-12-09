@@ -28,3 +28,12 @@
 - Testikattavuus nostettu 48%:iin
 - Pylint-virheitä vähennetty 2:een
 - Lisätty sekvenssikaavio arkkitehtuuridokumenttiin
+
+## Viikko 6
+
+- Eroteltiin käyttöliittymä omaksi UI-luokaksi (ui.py)
+- Lisättiin docstring-dokumentaatio luokkiin ja metodeihin
+- Päivitettiin arkkitehtuurikuvaus uuden rakenteen mukaisesti
+- Laadittiin käyttöohje
+- Testikattavuus yli 60%
+- Lisättiin toimiva OpenWeatherMap API säätietoihin
