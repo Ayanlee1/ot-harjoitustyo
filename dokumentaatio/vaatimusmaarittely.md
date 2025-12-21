@@ -13,4 +13,6 @@ Sovellus näyttää käyttäjälle säätilan tallennetuille paikoille haettuna 
 - [x] Käyttäjä näkee säätiedot valitsemalleen paikalle (OpenWeatherMap API)
 - [x] Käyttäjä näkee 5 päivän sääennusteen valitsemalleen paikalle (OpenWeatherMap API)
 - [x] Tiedot tallennetaan SQLite-tietokantaan
-- [ ] Graafinen käyttöliittymä (toteutettu tekstipohjaisena)
+- [x] Graafinen käyttöliittymä Tkinter-pohjaisena
+- [x] Tekstipohjainen varakäyttöliittymä
+- [x] API-avain konfiguroidaan .env-tiedostossa

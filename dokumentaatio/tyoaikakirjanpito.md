@@ -15,3 +15,6 @@
 |06-12-2025|4h|Viikko 6, Harjoitus1-2|
 |07-12-2025|4h|Viikko 6, Harjoitus3-4|
 |09-12-2025|1h|Viikko 6, Harjoitus6-7|
+|19-12-2025|4h|Viikko 7, Harjoitustyön loppupalautus|
+|20-12-2025|3h|Viikko 7, Harjoitustyön loppupalautus|
+|21-12-2025|3h|Viikko 7, Harjoitustyön loppupalautus|

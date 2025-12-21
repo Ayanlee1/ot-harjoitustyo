@@ -4,7 +4,10 @@ import sys
 
 
 def get_database_connection():
-    """Palauttaa tietokantayhteyden. Testitilassa käytetään test.db-tiedostoa, muuten weather.db."""
+    """Palauttaa tietokantayhteyden. Testitilassa käytetään test.db-tiedostoa, muuten weather.db.
+
+    Returns:
+        sqlite3.Connection: Tietokantayhteys SQLite-tietokantaan."""
     dirname = os.path.dirname(__file__)
 
     if "pytest" in sys.modules:

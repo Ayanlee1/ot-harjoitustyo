@@ -34,3 +34,44 @@ class TestWeatherService(unittest.TestCase):
         service.api_key = ""
         forecasts = service.get_5day_forecast("Helsinki")
         self.assertEqual(forecasts, ["Virhe"])
+
+    def test_get_weather_with_api_key_but_empty_string(self):
+        self.service.api_key = ""
+        result = self.service.get_weather("Helsinki")
+        self.assertEqual(result, "Virhe")
+
+    def test_get_5day_forecast_with_api_key_but_empty_string(self):
+        self.service.api_key = ""
+        result = self.service.get_5day_forecast("Helsinki")
+        self.assertEqual(result, ["Virhe"])
+
+    def test_get_weather_when_api_key_is_none(self):
+        self.service.api_key = None
+        result = self.service.get_weather("Helsinki")
+        self.assertEqual(result, "Virhe")
+
+    def test_get_5day_forecast_when_api_key_is_none(self):
+        self.service.api_key = None
+        result = self.service.get_5day_forecast("Helsinki")
+        self.assertEqual(result, ["Virhe"])
+
+    def test_get_weather_with_whitespace_api_key(self):
+        self.service.api_key = "   "
+        result = self.service.get_weather("Helsinki")
+        self.assertEqual(result, "Virhe")
+
+    def test_get_5day_forecast_with_whitespace_api_key(self):
+        self.service.api_key = "   "
+        result = self.service.get_5day_forecast("Helsinki")
+        self.assertEqual(result, ["Virhe"])
+
+    def test_get_weather_when_api_key_is_set(self):
+        self.service.api_key = "jotain"
+        result = self.service.get_weather("Helsinki")
+        self.assertIsNotNone(result)
+
+    def test_get_5day_forecast_when_api_key_is_set(self):
+        self.service.api_key = "jotain"
+        result = self.service.get_5day_forecast("Helsinki")
+        self.assertIsNotNone(result)
+        self.assertTrue(isinstance(result, list))

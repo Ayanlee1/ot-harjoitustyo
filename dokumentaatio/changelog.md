@@ -37,3 +37,11 @@
 - Laadittiin käyttöohje
 - Testikattavuus yli 60%
 - Lisättiin toimiva OpenWeatherMap API säätietoihin
+
+## Viikko 7
+
+- Toteutettiin graafinen käyttöliittymä TkInterillä
+- Siirretty API-avain turvallisesti .env-tiedostoon
+- Lisätty tuki sekä graafiselle että tekstipohjaiselle käyttöliittymälle
+- Paranneltu virheenkäsittelyä ja käyttäjäkokemusta
+- Viimeistelty dokumentaatio ja testikattavuus loppupalautusta varten

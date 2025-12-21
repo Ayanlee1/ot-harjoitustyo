@@ -1,44 +1,55 @@
 import time
+from database_connection import get_database_connection
+from repositories.location_repository import LocationRepository
+from services.weather_service import WeatherService
 
 
 class UI:
     """Tekstipohjainen käyttöliittymä säätietosovellukselle."""
 
     def __init__(self, weather_service):
-        """Alustaa käyttöliittymän. Tarvitsee WeatherService-olion toiminnalle."""
+        """Alustaa käyttöliittymän."""
         self.service = weather_service
 
     def run(self):
-        """Käynnistää käyttöliittymän pääsilmukan. Näyttää valikon ja käsittelee käyttäjän valintoja kunnes käyttäjä lopettaa."""
+        """Käynnistää käyttöliittymän pääsilmukan. 
+        Näyttää valikon ja käsittelee käyttäjän valintoja kunnes käyttäjä lopettaa."""
         while True:
-            print("\n=== SÄÄSOVELLUS ===")
-            print("1. Lisää paikka")
-            print("2. Näytä paikat")
-            print("3. Poista paikka")
-            print("4. Hae sää")
-            print("5. Hae 5 päivän ennuste")
-            print("0. Lopeta")
-
+            self._show_menu()
             choice = input("Valinta: ")
 
             if choice == "0":
                 print("Hei hei!")
                 break
-            elif choice == "1":
+            if choice == "1":
                 self._add_location()
-            elif choice == "2":
+                continue
+            if choice == "2":
                 self._show_locations()
-            elif choice == "3":
+                continue
+            if choice == "3":
                 self._remove_location()
-            elif choice == "4":
+                continue
+            if choice == "4":
                 self._get_weather()
-            elif choice == "5":
+                continue
+            if choice == "5":
                 self._get_forecast()
-            else:
-                print("Virheellinen valinta")
+                continue
+            print("Virheellinen valinta")
+
+    def _show_menu(self):
+        """Näyttää päävalikon."""
+        print("\n=== SÄÄSOVELLUS ===")
+        print("1. Lisää paikka")
+        print("2. Näytä paikat")
+        print("3. Poista paikka")
+        print("4. Hae sää")
+        print("5. Hae 5 päivän ennuste")
+        print("0. Lopeta")
 
     def _add_location(self):
-        """Pyytää käyttäjältä paikan nimen ja lisää sen tallennettavien paikkojen listaan."""
+        """Pyytää käyttäjältä paikan nimen ja lisää sen listaan."""
         location = input("Anna paikan nimi: ")
         success = self.service.add_location(location)
         if success:
@@ -57,7 +68,7 @@ class UI:
             print("Ei tallennettuja paikkoja.")
 
     def _remove_location(self):
-        """Pyytää käyttäjältä poistettavan paikan nimen ja poistaa sen listalta."""
+        """Pyytää käyttäjältä poistettavan paikan nimen."""
         location = input("Poistettava paikka: ")
         success = self.service.remove_location(location)
         if success:
@@ -81,7 +92,7 @@ class UI:
         print(weather)
 
     def _get_forecast(self):
-        """Pyytää paikan nimen ja näyttää sen 5 päivän sääennusteen."""
+        """Pyytää paikan nimen ja näyttää 5 päivän sääennusteen."""
         location = input("Paikka: ")
 
         print("Haetaan ennustetta", end="", flush=True)
@@ -93,14 +104,27 @@ class UI:
 
         forecasts = self.service.get_5day_forecast(location)
 
-        if isinstance(forecasts, list) and len(forecasts) > 0:
+        if isinstance(forecasts, list) and forecasts:
             if forecasts[0] == "Virhe":
                 print("Virhe ennustetta haettaessa.")
-
             else:
                 print(f"\n5 päivän ennuste {location}:lle:")
                 for forecast in forecasts:
                     print(f"  {forecast}")
-
         else:
             print("Virhe ennustetta haettaessa.")
+
+
+def main():
+    """Pääfunktio, joka käynnistää tekstikäyttöliittymän."""
+
+    connection = get_database_connection()
+    location_repository = LocationRepository(connection)
+    weather_service = WeatherService(location_repository)
+
+    ui = UI(weather_service)
+    ui.run()
+
+
+if __name__ == "__main__":
+    main()
