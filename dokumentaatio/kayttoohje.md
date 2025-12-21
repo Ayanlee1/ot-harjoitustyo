@@ -1,6 +1,6 @@
 # Käyttöohje
 
-Lataa projektin viimeisimmän [releasen](https://github.com/Ayanlee1/ot-harjoitustyo/releases/tag/viikko5) lähdekoodi valitsemalla _Assets_-osion alta _Source code_.
+Lataa projektin viimeisimmän [releasen](https://github.com/Ayanlee1/ot-harjoitustyo/releases) lähdekoodi valitsemalla _Assets_-osion alta _Source code_.
 
 ## Asennus
 
